@@ -10,9 +10,9 @@ from neo4j_graphrag.embeddings import OpenAIEmbeddings
 from neo4j_graphrag.experimental.pipeline.kg_builder import SimpleKGPipeline
 
 # tag::import_splitter[]
-# You will need to install langchain: pip install langchain
+# You will need to install langchain-text-splitters: pip install langchain-text-splitters
 from neo4j_graphrag.experimental.components.text_splitters.langchain import LangChainTextSplitterAdapter
-from langchain.text_splitter import CharacterTextSplitter
+from langchain_text_splitters import CharacterTextSplitter
 # end::import_splitter[]
 
 neo4j_driver = GraphDatabase.driver(
