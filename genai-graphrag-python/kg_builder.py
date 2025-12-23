@@ -83,6 +83,11 @@ kg_builder = SimpleKGPipeline(
     },
 )
 
-pdf_file = "./genai-graphrag-python/data/genai-fundamentals_1-generative-ai_1-what-is-genai.pdf"
-result = asyncio.run(kg_builder.run_async(file_path=pdf_file))
-print(result.result)
+data_path = "./genai-graphrag-python/data/"
+pdf_files = [os.path.join(data_path, f) for f in os.listdir(data_path) if f.endswith('.pdf')]
+
+for pdf_file in pdf_files:
+
+    print(f"Processing {pdf_file}")
+    result = asyncio.run(kg_builder.run_async(file_path=pdf_file))
+    print(result.result)
