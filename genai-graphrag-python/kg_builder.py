@@ -35,6 +35,16 @@ NODE_TYPES = [
     "Concept",
     "Example",
     "Process",
+    "Challenge",
+    {"label": "Benefit", "description": "A benefit or advantage of using a technology or approach."},
+    {
+        "label": "Resource",
+        "description": "A related learning resource such as a book, article, video, or course.",
+        "properties": [
+            {"name": "name", "type": "STRING", "required": True}, 
+            {"name": "type", "type": "STRING"}
+        ]
+    },
 ]
 
 kg_builder = SimpleKGPipeline(
