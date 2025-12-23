@@ -13,11 +13,14 @@ schema_extractor = SchemaFromTextExtractor(
     )
 )
 
-text = """
-Neo4j is a graph database management system (GDBMS) developed by Neo4j Inc.
-"""
+texts = [
+    "Neo4j is a graph database management system (GDBMS) developed by Neo4j Inc.",
+    "Python is a programming language created by Guido van Rossum.",
+    "The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris, France.",
+    "Large Language Models (LLMs) are a type of artificial intelligence model designed to understand and generate human-like text."
+]
 
 # Extract the schema from the text
-extracted_schema = asyncio.run(schema_extractor.run(text=text))
-
-print(extracted_schema)
+for text in texts:
+    extracted_schema = asyncio.run(schema_extractor.run(text=text))
+    print(extracted_schema)
