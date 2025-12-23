@@ -8,6 +8,7 @@ from neo4j import GraphDatabase
 from neo4j_graphrag.llm import OpenAILLM
 from neo4j_graphrag.embeddings import OpenAIEmbeddings
 from neo4j_graphrag.experimental.pipeline.kg_builder import SimpleKGPipeline
+from neo4j_graphrag.experimental.components.text_splitters.fixed_size_splitter import FixedSizeSplitter
 
 neo4j_driver = GraphDatabase.driver(
     os.getenv("NEO4J_URI"),
@@ -27,12 +28,25 @@ embedder = OpenAIEmbeddings(
     model="text-embedding-ada-002"
 )
 
+text_splitter = FixedSizeSplitter(chunk_size=500, chunk_overlap=100)
+
+NODE_TYPES = [
+    "Technology",
+    "Concept",
+    "Example",
+    "Process",
+]
+
 kg_builder = SimpleKGPipeline(
     llm=llm,
     driver=neo4j_driver, 
     neo4j_database=os.getenv("NEO4J_DATABASE"), 
     embedder=embedder, 
     from_pdf=True,
+    text_splitter=text_splitter,
+    schema={
+        "node_types": NODE_TYPES,
+    },
 )
 
 pdf_file = "./genai-graphrag-python/data/genai-fundamentals_1-generative-ai_1-what-is-genai.pdf"
