@@ -22,7 +22,12 @@ embedder = OpenAIEmbeddings(model="text-embedding-ada-002")
 
 # Define retrieval query
 retrieval_query = """
-RETURN node.text as text, score
+MATCH (node)-[:FROM_DOCUMENT]->(d)-[:PDF_OF]->(lesson)
+RETURN DISTINCT
+    node.text as text, score,
+    lesson.url as lesson_url,
+    collect { MATCH (node)<-[:FROM_CHUNK]-(e:Technology) RETURN e.name } as technologies,
+    collect { MATCH (node)<-[:FROM_CHUNK]-(e:Concept) RETURN e.name } as concepts
 """
 
 # Create retriever
@@ -41,7 +46,7 @@ llm = OpenAILLM(model_name="gpt-4o")
 rag = GraphRAG(retriever=retriever, llm=llm)
 
 # Search
-query_text = "what is the primary function of Generative AI (GenAI) systems?"
+query_text = "Where can I learn more about knowledge graphs?"
 
 response = rag.search(
     query_text=query_text, 
