@@ -41,7 +41,7 @@ llm = OpenAILLM(model_name="gpt-4o")
 rag = GraphRAG(retriever=retriever, llm=llm)
 
 # Search
-query_text = "Where can I learn more about knowledge graphs?"
+query_text = "what is the primary function of Generative AI (GenAI) systems?"
 
 response = rag.search(
     query_text=query_text, 
@@ -49,7 +49,10 @@ response = rag.search(
     return_context=True
 )
 
+print("CONTEXT:", response.retriever_result.items, "\n")
+
 print(response.answer)
+
 
 # Close the database connection
 driver.close()
